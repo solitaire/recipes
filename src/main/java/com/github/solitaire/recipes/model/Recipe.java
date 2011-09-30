@@ -1,9 +1,13 @@
 package com.github.solitaire.recipes.model;
 
-import javax.persistence.Column;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -13,6 +17,7 @@ public class Recipe
 	private long id;
 	private String name;
 	private String instructions;
+	private List<Ingredient> ingredients = new LinkedList<Ingredient>();
 	
 	@Id
 	@GeneratedValue
@@ -21,19 +26,17 @@ public class Recipe
 		return id;
 	}
 	
-	@Column(name = "id")
-	public void setId(long id)
+	public void setId(final long id)
 	{
 		this.id = id;
 	}
 	
-	@Column(name = "name")
 	public String getName()
 	{
 		return name;
 	}
 	
-	public void setName(String name)
+	public void setName(final String name)
 	{
 		this.name = name;
 	}
@@ -43,9 +46,20 @@ public class Recipe
 		return instructions;
 	}
 	
-	public void setInstructions(String instructions)
+	public void setInstructions(final String instructions)
 	{
 		this.instructions = instructions;
+	}
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	public List<Ingredient> getIngredients()
+	{
+		return ingredients;
+	}
+	
+	public void setIngredients(final List<Ingredient> ingredients)
+	{
+		this.ingredients = ingredients;
 	}
 		
 }

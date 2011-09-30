@@ -29,7 +29,6 @@
         <property name="show_sql">true</property>
 		<mapping class="com.github.solitaire.recipes.model.Recipe" />
 		<mapping class="com.github.solitaire.recipes.model.Category" />
-		<mapping class="com.github.solitaire.recipes.model.Ingredient" />
         <!-- Drop and re-create the database schema on startup -->
     </session-factory>
 
