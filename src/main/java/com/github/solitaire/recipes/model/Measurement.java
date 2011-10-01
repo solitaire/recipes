@@ -12,7 +12,18 @@ public class Measurement implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	private String name;
-	private Double amount;
+	private double amount;
+	
+	public Measurement()
+	{
+		
+	}
+	
+	public Measurement(final String name, final double amount)
+	{
+		this.name = name;
+		this.amount = amount;
+	}
 	
 	@Column(name = "measurement_name")
 	public String getName()
@@ -26,12 +37,12 @@ public class Measurement implements Serializable
 	}
 	
 	@Column(name = "measure_amount")
-	public Double getAmount()
+	public double getAmount()
 	{
 		return amount;
 	}
 	
-	public void setAmount(Double amount)
+	public void setAmount(double amount)
 	{
 		this.amount = amount;
 	}	
