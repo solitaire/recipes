@@ -1,12 +1,15 @@
 package com.github.solitaire.recipes.model;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,7 +20,8 @@ public class Recipe
 	private long id;
 	private String name;
 	private String instructions;
-	private List<Ingredient> ingredients = new LinkedList<Ingredient>();
+	private Set<Ingredient> ingredients = new HashSet<Ingredient>();
+	private Set<Category> categories = new HashSet<Category>();
 	
 	@Id
 	@GeneratedValue
@@ -52,14 +56,72 @@ public class Recipe
 	}
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	public List<Ingredient> getIngredients()
+	public Set<Ingredient> getIngredients()
 	{
 		return ingredients;
 	}
 	
-	public void setIngredients(final List<Ingredient> ingredients)
+	public void setIngredients(final Set<Ingredient> ingredients)
 	{
 		this.ingredients = ingredients;
+	}
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "recipes_categories", 
+			joinColumns = { @JoinColumn(name = "recipe_id", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "category_id",nullable = false, updatable = false) }) 
+	public Set<Category> getCategories()
+	{
+		return categories;
+	}
+	
+	public void setCategories(final Set<Category> categories)
+	{
+		this.categories = categories;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((ingredients == null) ? 0 : ingredients.hashCode());
+		result = prime * result
+				+ ((instructions == null) ? 0 : instructions.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Recipe other = (Recipe) obj;
+		if (ingredients == null) {
+			if (other.ingredients != null)
+				return false;
+		}
+		else if (!ingredients.equals(other.ingredients))
+			return false;
+		if (instructions == null) {
+			if (other.instructions != null)
+				return false;
+		}
+		else if (!instructions.equals(other.instructions))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		}
+		else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 		
 }
