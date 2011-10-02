@@ -1,5 +1,7 @@
 package com.github.solitaire.recipes.model;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -96,5 +98,27 @@ public class IngredientHibernateDAO implements IngredientDAO
 		{
 			session.close();
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Ingredient> findAll()
+	{
+		List<Ingredient> ingredients = null;
+		try 
+		{
+			session = factory.openSession();
+			transaction = session.beginTransaction();
+			ingredients = session.createSQLQuery("SELECT * FROM ingredients").list();
+			transaction.commit();
+		}
+		catch (HibernateException e) 
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		return ingredients;
 	}
 }
