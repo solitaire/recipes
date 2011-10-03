@@ -28,7 +28,6 @@ public class ModelIntegrationTest
 		recipe_two.setName("Salad");
 		recipe_two.setInstructions("Instructions");	
 		Category category = new Category();
-		category.setId(1);
 		category.setName("Dinner");
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
 		Session session = factory.openSession();
@@ -133,7 +132,7 @@ public class ModelIntegrationTest
 	{
 		Recipe recipe = model.getRecipe(1);
 		Category category = model.getCategory(1);
-	    model.addCategoryToRecipe(recipe, category);
+		model.addCategoryToRecipe(recipe, category);
 	    
 	    model.deleteCategory(1);
 	    assertEquals(0, model.getRecipe(1).getCategories().size());
