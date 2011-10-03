@@ -52,7 +52,7 @@ public class RecipeHibernateDAO implements RecipeDAO
 		{
 			session = factory.openSession();
 			transaction = session.beginTransaction();
-			recipes = session.createSQLQuery("SELECT * FROM recipes").list();
+			recipes = (List<Recipe>)session.createSQLQuery("SELECT * FROM recipes").addEntity(Recipe.class).list();
 			transaction.commit();
 		}
 		catch (HibernateException e) 

@@ -108,7 +108,7 @@ public class IngredientHibernateDAO implements IngredientDAO
 		{
 			session = factory.openSession();
 			transaction = session.beginTransaction();
-			ingredients = session.createSQLQuery("SELECT * FROM ingredients").list();
+			ingredients = (List<Ingredient>)session.createSQLQuery("SELECT * FROM ingredients").addEntity(Ingredient.class).list();
 			transaction.commit();
 		}
 		catch (HibernateException e) 

@@ -73,7 +73,7 @@ public class CategoryHibernateDAO implements CategoryDAO
 		{
 			session = factory.openSession();
 			transaction = session.beginTransaction();
-			categories = session.createSQLQuery("SELECT * FROM categories").list();
+			categories = (List<Category>)session.createSQLQuery("SELECT * FROM categories").addEntity(Category.class).list();
 			transaction.commit();
 		}
 		catch (HibernateException e) 
@@ -106,7 +106,7 @@ public class CategoryHibernateDAO implements CategoryDAO
 		}
 	}
 
-	public void delete(final Category category)
+	public void delete(Category category)
 	{
 		try 
 		{
@@ -125,7 +125,7 @@ public class CategoryHibernateDAO implements CategoryDAO
 		}
 	}
 
-	public void update(final Category category)
+	public void update(Category category)
 	{
 		try 
 		{
