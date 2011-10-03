@@ -3,6 +3,7 @@ package com.github.solitaire.recipes.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "recipes")
@@ -55,7 +59,7 @@ public class Recipe
 		this.instructions = instructions;
 	}
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(orphanRemoval=true, fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
 	public Set<Ingredient> getIngredients()
 	{
 		return ingredients;
@@ -66,10 +70,10 @@ public class Recipe
 		this.ingredients = ingredients;
 	}
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(name = "recipes_categories", 
-			joinColumns = { @JoinColumn(name = "recipe_id", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "category_id",nullable = false, updatable = false) }) 
+			joinColumns = { @JoinColumn(name = "recipe_id", nullable = true) }, 
+			inverseJoinColumns = { @JoinColumn(name = "category_id",nullable = true) }) 
 	public Set<Category> getCategories()
 	{
 		return categories;
@@ -85,8 +89,6 @@ public class Recipe
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((ingredients == null) ? 0 : ingredients.hashCode());
 		result = prime * result
 				+ ((instructions == null) ? 0 : instructions.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());

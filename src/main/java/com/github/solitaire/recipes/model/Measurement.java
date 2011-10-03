@@ -36,7 +36,7 @@ public class Measurement implements Serializable
 		this.name = name;
 	}
 	
-	@Column(name = "measure_amount")
+	@Column(name = "measurement_amount")
 	public double getAmount()
 	{
 		return amount;
