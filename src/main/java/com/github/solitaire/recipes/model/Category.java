@@ -4,11 +4,20 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Entity
@@ -32,6 +41,7 @@ public class Category implements Serializable
 		this.id = id;
 	}
 	
+	@Column(unique = true)
 	public String getName()
 	{
 		return name;
@@ -42,7 +52,10 @@ public class Category implements Serializable
 		this.name = name;
 	}
 	
-	@ManyToMany(mappedBy = "categories")
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "recipes_categories", 
+			joinColumns = { @JoinColumn(name = "category_id", nullable = true) }, 
+			inverseJoinColumns = { @JoinColumn(name = "recipe_id",nullable = true) }) 	
 	public Set<Recipe> getRecipes()
 	{
 		return recipes;
