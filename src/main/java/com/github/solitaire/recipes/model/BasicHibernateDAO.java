@@ -18,11 +18,14 @@ public abstract class BasicHibernateDAO<ObjectType, PrimaryKeyType extends Seria
 	private Session session;
 	private Transaction transaction;
 	private Class<ObjectType> type;
+	private String tableName;
 	
 	public BasicHibernateDAO()
 	{
 		this.type = (Class<ObjectType>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
+		int dot = type.getName().lastIndexOf('.');
+		this.tableName = type.getName().substring(dot+1);
 	}
 	
 	public ObjectType find(final PrimaryKeyType id)
@@ -53,7 +56,7 @@ public abstract class BasicHibernateDAO<ObjectType, PrimaryKeyType extends Seria
 		{
 			session = factory.openSession();
 			transaction = session.beginTransaction();
-			objects = (List<ObjectType>)session.createSQLQuery("SELECT * FROM categories").addEntity(Category.class).list();
+			objects = (List<ObjectType>)session.createQuery("FROM " + tableName).list();
 			transaction.commit();
 		}
 		catch (HibernateException e) 
