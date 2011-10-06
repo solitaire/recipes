@@ -26,9 +26,7 @@ public class CategoryHibernateDAOTest
 	{
 		Category category_one = new Category();
 		Category category_two = new Category();	
-		category_one.setId(1);
 		category_one.setName("Breakfast");
-		category_two.setId(2);
 		category_one.setName("Dinner");
 		
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
@@ -57,24 +55,24 @@ public class CategoryHibernateDAOTest
 		Category category = new Category();
 		category.setName("Salads");
 		categoryDAO.create(category);
-		assertEquals("Salads", categoryDAO.find(3).getName());
+		assertEquals("Salads", categoryDAO.find((long) 3).getName());
 	}
 
 	@Test
 	public void itUpdatesCategory()
 	{
-		Category category = categoryDAO.find(1);
+		Category category = categoryDAO.find((long) 1);
 		category.setName("Salads");
 		categoryDAO.update(category);
-		assertEquals("Salads", categoryDAO.find(1).getName());
+		assertEquals("Salads", categoryDAO.find((long) 1).getName());
 	}
 	
 	@Test
 	public void itDeletesCategory()
 	{
-		Category category = categoryDAO.find(1);
+		Category category = categoryDAO.find((long) 1);
 		categoryDAO.delete(category);
-		assertNull(categoryDAO.find(1));
+		assertNull(categoryDAO.find((long) 1));
 	}
 	
 	@Test
