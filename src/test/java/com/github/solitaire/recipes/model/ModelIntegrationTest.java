@@ -1,6 +1,7 @@
 package com.github.solitaire.recipes.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 
@@ -8,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -72,7 +72,7 @@ public class ModelIntegrationTest
 	@Test
 	public void itUpdatesRecipe(){
 		Recipe recipe = new Recipe();
-		recipe.setId(1);
+		recipe.setId((long) 1);
 		recipe.setName("Boiled Shrimps");
 		recipe.setInstructions("Instructions");
 		model.updateRecipe(recipe);
@@ -133,9 +133,8 @@ public class ModelIntegrationTest
 		Recipe recipe = model.getRecipe(1);
 		Category category = model.getCategory(1);
 		model.addCategoryToRecipe(recipe, category);
-	    
-	    model.deleteCategory(1);
-	    assertEquals(0, model.getRecipe(1).getCategories().size());
-	    assertEquals(0, model.getAllCategories().size());
+		model.deleteCategory(1);
+		assertEquals(0, model.getRecipe(1).getCategories().size());
+		assertEquals(0, model.getAllCategories().size());
 	}
 }

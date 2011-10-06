@@ -25,10 +25,8 @@ public class IngredientHibernateDAOTest
 	{
 		Ingredient ingredient_one = new Ingredient();
 		Ingredient ingredient_two = new Ingredient();	
-		ingredient_one.setId(1);
 		ingredient_one.setName("Cheese");
 		ingredient_one.setMeasurement(new Measurement("slices", 2));
-		ingredient_two.setId(2);
 		ingredient_one.setName("Eggs");
 		ingredient_two.setMeasurement(new Measurement("", 3));		
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
@@ -55,28 +53,27 @@ public class IngredientHibernateDAOTest
 	public void itAddsIngredients()
 	{
 		Ingredient ingredient = new Ingredient();
-		ingredient.setId(3);
 		ingredient.setName("Shrimps");
 		ingredient.setMeasurement(new Measurement("g", 200));
 		ingredientDAO.create(ingredient);
-		assertEquals("Shrimps", ingredientDAO.find(3).getName());
-		assertEquals("g", ingredientDAO.find(3).getMeasurement().getName());
+		assertEquals("Shrimps", ingredientDAO.find((long) 3).getName());
+		assertEquals("g", ingredientDAO.find((long) 3).getMeasurement().getName());
 	}
 	
 	@Test
 	public void itUpdatesIngredient()
 	{
-		Ingredient ingredient = ingredientDAO.find(1);
+		Ingredient ingredient = ingredientDAO.find((long) 1);
 		ingredient.setName("Apple");
 		ingredientDAO.update(ingredient);
-		assertEquals("Apple", ingredientDAO.find(1).getName());
+		assertEquals("Apple", ingredientDAO.find((long) 1).getName());
 	}
 	
 	@Test
 	public void itDeletesIngredient()
 	{
-		Ingredient ingredient = ingredientDAO.find(1);
+		Ingredient ingredient = ingredientDAO.find((long) 1);
 		ingredientDAO.delete(ingredient);
-		assertNull(ingredientDAO.find(1));
+		assertNull(ingredientDAO.find((long) 1));
 	}
 }

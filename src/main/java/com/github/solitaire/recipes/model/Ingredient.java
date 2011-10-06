@@ -15,18 +15,18 @@ public class Ingredient implements Serializable
 
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
+	private Long id;
 	private String name;
 	private Measurement measurement;
 	
 	@Id
 	@GeneratedValue
-	public long getId()
+	public Long getId()
 	{
 		return id;
 	}
 	
-	public void setId(final long id)
+	public void setId(final Long id)
 	{
 		this.id = id;
 	}
