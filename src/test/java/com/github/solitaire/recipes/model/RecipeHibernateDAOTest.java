@@ -26,10 +26,10 @@ public class RecipeHibernateDAOTest
 	{	
 		Recipe recipe_one = new Recipe();
 		Recipe recipe_two = new Recipe();	
-		recipe_one.setId(1);
+		recipe_one.setId((long) 1);
 		recipe_one.setName("Shrimps");
 		recipe_one.setInstructions("Instructions");
-		recipe_two.setId(2);
+		recipe_two.setId((long) 2);
 		recipe_two.setName("Salad");
 		recipe_two.setInstructions("Instructions");		
 		SessionFactory factory = new Configuration().configure().buildSessionFactory();
@@ -65,7 +65,7 @@ public class RecipeHibernateDAOTest
 	@Test
 	public void itDeletesRecipe()
 	{
-		Recipe recipe = recipeDAO.find(1);
+		Recipe recipe = recipeDAO.find((long) 1);
 		recipeDAO.delete(recipe);
 		assertEquals(1, recipeDAO.findAll().size());
 	}
@@ -73,11 +73,11 @@ public class RecipeHibernateDAOTest
 	@Test
 	public void itUpdatesRecipe()
 	{
-		Recipe recipe = recipeDAO.find(1);
+		Recipe recipe = recipeDAO.find((long) 1);
 		recipe.setName("Lobsters");
 		recipeDAO.update(recipe);
 		assertEquals(2, recipeDAO.findAll().size());
-		assertEquals("Lobsters", recipeDAO.find(1).getName());
+		assertEquals("Lobsters", recipeDAO.find((long) 1).getName());
 	}
 
 }

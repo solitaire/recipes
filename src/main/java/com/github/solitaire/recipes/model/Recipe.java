@@ -14,14 +14,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 @Entity
 @Table(name = "recipes")
 public class Recipe
 {
-	private long id;
+	private Long id;
 	private String name;
 	private String instructions;
 	private Set<Ingredient> ingredients = new HashSet<Ingredient>();
@@ -29,12 +26,12 @@ public class Recipe
 	
 	@Id
 	@GeneratedValue
-	public long getId()
+	public Long getId()
 	{
 		return id;
 	}
 	
-	public void setId(final long id)
+	public void setId(final Long id)
 	{
 		this.id = id;
 	}
